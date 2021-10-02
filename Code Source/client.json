@@ -1,0 +1,76 @@
+$.ajax({
+            url: 'clienthistory.php',
+            type: 'post',
+            data: {
+                'cart': JSON.stringify(ProductsList),
+                'totall': cartTotall,
+                'clientEarnings': clientEarnings,
+            },
+            dataType: 'json',
+            success: function (data) {
+                    if (data.res == 1) {
+                        cartTotall = 0
+                        clientEarnings = 0
+
+
+                        cartTotall += element.priceFinal
+                        clientEarnings += element.productEarnings
+
+
+
+                        [{
+                            "id": "925",
+                            "label": "LileAuTresor",
+                            "price": 50,
+                            "quantity": 1,
+                            "stock": 9899952,
+                            "imgSource": "images/LileAuTresor609ff34b2b49008ad39684fa9c6c5ead26ab13ee32063.webp",
+                            "priceFinal": 50,
+                            "priceBuying": 45,
+                            "productEarnings": 5
+                        }, {
+                            "id": "924",
+                            "label": "styloOrange",
+                            "price": 2,
+                            "quantity": 32,
+                            "stock": 32,
+                            "imgSource": "images/styloOrange609ff32015a8bbobfoley.webp",
+                            "priceFinal": 64,
+                            "priceBuying": 0,
+                            "productEarnings": 64
+                        }, {
+                            "id": "923",
+                            "label": "raibi",
+                            "price": 2,
+                            "quantity": 44,
+                            "stock": 483,
+                            "imgSource": "images/raibi609fd347a4c1battachment.jpg",
+                            "priceFinal": 88,
+                            "priceBuying": 0,
+                            "productEarnings": 88
+                        }]
+
+
+
+
+                        [{
+                            "id": "767",
+                            "label": "Tonik",
+                            "price": 1,
+                            "quantity": 6,
+                            "stock": 6,
+                            "imgSource": "images/Tonik60994c5ee2bcc1329.webp",
+                            "priceFinal": 6,
+                            "priceBuying": 0,
+                            "productEarnings": 5
+                        }, {
+                            "id": "924",
+                            "label": "styloOrange",
+                            "price": 2,
+                            "quantity": 15,
+                            "stock": 19,
+                            "imgSource": "images/styloOrange609ff32015a8bbobfoley.webp",
+                            "priceFinal": 30,
+                            "priceBuying": 0,
+                            "productEarnings": 24
+                        }]

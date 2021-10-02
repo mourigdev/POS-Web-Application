@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>EasySale The easiest way to sell everything</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <!-- <link rel="stylesheet" href="css/graindashboard.css"> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="icon" href="icon.png" type="image/gif" sizes="16x16">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" id="materialise">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous" id='bootstrap'>
+  <link href='style.css' rel='stylesheet'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/pdfmake.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/vfs_fonts.js'></script>
+
+</head>
+
+<body>
+  <div class="containerr" style="display: none;">
+
+    <div class="leftSidbar">
+<div class="mySidbar mySidbar2">
+      <div class="logo logo2">
+        <p>eco</p>
+      </div>
+
+      <div class="navBar navbar2">
+
+        <ul>
+          <li><a id="dashbordShow" style="color: #3427b0;"><i class="ri-dashboard-fill"></i></a></li>
+          <li><a id="productShow" ><i class="ri-store-2-line"></i></a></li>
+          <li><a id="showClients"><i class="ri-wallet-3-fill"></i></a></li>
+          <li><a id="showSettings"><i class="ri-account-box-line"></i></a></li>
+        </ul>
+
+      </div>
+
+      <div class="logout logout2">
+        <a id="logoutBtn" style="cursor: pointer;color : auto" class="logoutBtn"><i class="ri-logout-box-line"></i><p>Logout</p></a>
+      </div>
+    </div>
+    </div>
+
+
+    <div class="rightApp">
+
+      <div class="dashbordStat">
+      <div class="header">
+        <div class="HeaderLeft">
+          <p>Orders</p>
+        </div>
+
+        <div class="HeaderRight">
+          
+          <div class="changeDate">
+
+            <div class="treeDates">
+              <div class="daily easyDate" id="dailyChart">
+                  <p class="topDates">Daily</p>
+              </div>
+
+              <div class="monthly easyDate" id="monthlyChart">
+                <p class="topDates">Monthly</p>
+              </div>
+
+              <div class="weekly easyDate" id="weeklyChart">
+                <p class="topDates">Weekly</p>
+              </div>
+
+            </div>
+
+            <div class="custumDate">
+              <input type="date" id="specificDay" style="border-bottom:none">
+            </div>
+
+          </div>
+
+
+
+        </div>
+      </div>
+  
+
+      <div class="app">
+      <div class="earningsCards">
+
+        <div class="cards card1">
+          <div class="cardIco">
+            <i class="ri-shopping-bag-3-line"></i>
+          </div>
+
+          <div class="cardResults">
+            <label>Items</label>
+            <p id="items"></p>
+          </div>
+        </div>
+
+        <div class="cards card2">
+
+          <div class="cardIco">
+            <i class="ri-pie-chart-line"></i>
+          </div>
+          
+          <div class="cardResults">
+            <label>Total Cash</label>
+            <p id="totalCash"></p>
+          </div>
+
+        </div>
+
+
+        <div class="cards card3">
+
+          <div class="cardIco">
+            <i class="ri-money-dollar-circle-line"></i>
+          </div>
+          
+          <div class="cardResults">
+            <label>Revenue</label>
+            <p id='dayRevenueCard'></p>
+          </div>
+
+        </div>
+
+        <div class="cards card4">
+
+          <div class="cardIco">
+            <i class="ri-bill-line"></i>
+          </div>
+          
+          <div class="cardResults">
+            <label>Month Earnings</label>
+            <p id="earningsMonth">9,532</p>
+          </div>
+
+        </div>
+      </div>
+      
+      <div class="chartContainer">
+      <div class="chartEarnings" id="chartEarnings">
+          <canvas id="myChart" style="box-sizing: border-box; height: 340px; width: 976.364px"></canvas>
+          <canvas id="myChartMonth" style="display: none; box-sizing: border-box; height: 340px; width: 976.364px"></canvas>
+          <canvas id="myChart4weeks" style="display: none;box-sizing: border-box; height: 340px; width: 976.364px"></canvas>
+          <div id="thisdayChart" style="display: none">
+            <div class="cod" style="width: 70%;">
+          <canvas id="myChartThisDay" style="display: block; height: 380px;"></canvas>
+        </div>
+          <div class="ss" style="width: 30%">
+          <canvas id="myChartThisDayBar" style="display: block; height: 380px;"></canvas>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+
+
+
+    <!-- =================== -->
+
+<div class="listPd" style="display: none;">
+    <div id='posTop' method="post" enctype="multipart/form-data" >
+
+<div class="leftbtns" style="display: flex;">
+      <button id='addPToogle' class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="background-color: #3427b0;
+      border-color: #3427b0; box-shadow: none;">add+</button>
+        <!-- Switch -->
+  <div class="switch">
+    <p style="margin: 0;">Mode Client</p>
+    <label>
+      Off
+      <input type="checkbox">
+      <span class="lever"></span>
+      On
+    </label>
+  </div>
+</div>
+
+      <div class="rightTopHeader">
+      <i  id="newClientCart" class="ri-shopping-basket-2-fill" style='height: 40px; margin: auto 30px;'></i>
+      <p id="numCartP" style="margin-left: -25px;
+      font-size: larger;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      color: #3427b0;"></p>
+
+      <!-- <img  id="showClients" style='height: 40px; margin: auto 0;' src="../clients.png"> -->
+      <select class="ss" id="selectNums" style="display: block; margin: auto 0; width: 110px;">
+      </select>
+
+
+
+      <input type='search' id='search' placeholder='Search' style='width: 150px; border: solid 1px #ddd;border-radius: 5px;margin: auto 0;display: block;margin-left: 8px;'>
+      <input type="search" id="searchPos" style="width: 0;height: 0; opacity: 0;" autocomplete="off">
+  </div>
+</div>
+
+<div style="display:none" class="header2">
+  <div class="HeaderLeft">
+    <p>Orders</p>
+  </div>
+
+  <div class="HeaderRight">
+    
+
+    <div class="changeDate2">
+
+      <select class="ss" id="selectNumsClient" style="display: none">
+      </select>
+      
+      <div class="treeDates">
+        <div class="daily easyDate2" id="AllClient">
+            <p class="topDates">All</p>
+        </div>
+        <div class="daily easyDate2" id="todayClient">
+            <p class="topDates">Today</p>
+        </div>
+
+        <div class="monthly easyDate2" id="yeasterdayClient">
+          <p class="topDates">Yeasterday</p>
+        </div>
+
+
+      </div>
+
+      <div class="custumDate">
+        <input type="date" id="specificDayClient" style="border-bottom:none">
+      </div>
+
+ 
+
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+    </div>
+    <div class="offcanvas-body">
+      <form id='MyForm' method="post" enctype="multipart/form-data" style="width: auto;">
+        <div class="alertRes"></div>
+        <div class="Divform">
+
+          <div >
+            <label id='codeBarLabel' for="codebar">CodeBar of Product</label>
+            <input id="codebar" type='text' name='codebar' required>
+            </div>
+
+        <div >
+        <label id='nameP' for="label">Name of Product</label>
+        <input id="label" type='text' name='label' required>
+        </div>
+    
+
+        <div>
+          <label id="prixBLabel" for="prixofBuying">Price of Buying</label>
+          <input id="prixofBuying" type="text" name="prixBuying" required>
+        </div>
+
+        <div>
+        <label id="prixP" for="prix">Price of Product</label>
+        <input id="prix" type="text" name="prix" required>
+        </div>
+
+    
+        <div>
+            <label id="stockP" for="stock">Stock of Product</label>
+            <input id="stock" type="text" name="stock" required>
+            </div>
+  
+  
+        <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"  id="inputGroupFile01">
+
+        <div class="edit" style="display: flex;">
+        <input id="SaveBtn" class="btn" type="submit" value="save" name='save' style='width: 90px; height: 40px; margin:0;background-color: #f5f5f5;
+        color: #000000;' >
+        <!-- <input id="editBtn" class="btn" type="submit" value="edit"  style='width: 90px; height: 40px; margin: 0; display: none'> -->
+        <button type="button" id="cancelEdit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style='width: 90px; height: 40px; margin:  0; display: none;width: 90px;
+        height: 40px;'>Cancel</button>
+</div>
+    </div>
+
+    </form>
+    </div>
+  </div>
+  <div class="alertRes2"></div>
+
+  <table class="co" style="width: auto;">
+
+  </table>
+
+
+  <div class="order_summary" style="position: fixed;">
+    <div class="summary_card">
+<div class="allProductsCart" style="max-height: 300px; overflow: auto;">
+  
+</div>
+<div class="priceZone">
+      <hr />
+
+      <div class="order_total">
+        <p>Total Amount</p>
+        <h4 class="tp"></h4>
+      </div>
+
+      <div class="save" style="margin-bottom: 10px;
+      margin-top: -14px;
+      display: flex;
+      justify-content: flex-end;">
+
+      </div>
+
+</div>
+    </div>
+  </div>
+
+
+  <!-- Product Statistique -->
+
+  <div class="modal fade" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1060;
+    display: none;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    outline: 0;
+    background-color: transparent;
+" id="StatisticsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="StatisticsModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div style="display: flex;justify-content: space-around;">
+            <p style="font-weight: 600; text-align: left;">Product was Buyed</p>
+            <p id="StatisticsNumberBuyed"></p>
+          </div>
+
+          <div style="display: flex;justify-content: space-around;">
+            <p style="font-weight: 600; text-align: left;">Earnings of Product</p>
+            <p id="StatisticsEarningsProduct"></p>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------End--------- -->
+
+</div>
+
+<div class="Settings" style="display: none;">
+
+
+</div>
+
+    </div>
+
+
+
+
+  </div>
+
+  <main class="main" style="display: none;">
+
+    <div class="content">
+
+    <div class="container-fluid pb-5">
+
+      <div class="row justify-content-md-center">
+        <div class="card-wrapper col-12 col-md-4 mt-5">
+          <div class="brand text-center mb-3">
+            <a href="/"><img src="logo.png"></a>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Login</h4>
+              <form id="loginForm" method="post">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input id="username" type="text" class="form-control" name="username" required="" >
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Password
+                  </label>
+                  <input id="password" type="password" class="form-control" name="password" required="">
+                  
+                </div>
+
+                <!-- <div class="form-group">
+                  <div class="form-check position-relative mb-2">
+                    <input type="checkbox" class="form-check-input" style="opacity : 1;pointer-events: auto;" id="remember" name="remember">
+                    <label class="checkbox checkbox-xxs form-check-label ml-1" for="remember"
+                       data-icon="&#xe936">Remember Me</label>
+                  </div>
+                </div> -->
+
+                <div class="form-group no-margin">
+                  <button type="button" id="loginBtn"  class="btn btn-primary btn-block">
+                    Sign In
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <footer class="footer mt-3">
+            <div class="container-fluid">
+              <div class="footer-content text-center small">
+                <span class="text-muted">&copy; 2021 MourigDev. All Rights Reserved.</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    </div>
+  </main>
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src='affichageAPI.js'></script>
+  <script src='main.js'></script>
+
+</body>
+
+</html>
